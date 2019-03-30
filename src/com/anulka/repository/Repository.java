@@ -1,5 +1,6 @@
 package com.anulka.repository;
 
+import com.anulka.model.LinesWithDate;
 import com.anulka.model.StopsWithDate;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class Repository {
     private static Repository instance;
 
     public Map<String, StopsWithDate> stops = new HashMap<>();
+    public Map<String, LinesWithDate> routes = new HashMap<>();
 
     private Repository() {
 
