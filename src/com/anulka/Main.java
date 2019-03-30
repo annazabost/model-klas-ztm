@@ -2,6 +2,7 @@ package com.anulka;
 
 import com.anulka.model.LinesWithDate;
 import com.anulka.model.StopsWithDate;
+import com.anulka.model.TripsWithDate;
 import com.anulka.repository.Repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,10 +20,13 @@ public class Main {
         try {
             Map<String, StopsWithDate> stops = loadStops();
             Map<String, LinesWithDate> routes = loadLines();
+            Map<String, TripsWithDate> trips = loadTrips();
             System.out.println("Loaded " + stops.size() + " stops data");
             System.out.println("Loaded " + routes.size() + " lines data");
+            System.out.println("Loaded " + trips.size() + " trips data");
             Repository.getInstance().routes =routes;
             Repository.getInstance().stops = stops;
+            Repository.getInstance().trips = trips;
         } catch (IOException e) {
             System.out.println("Could not read stops data: " + e.getMessage());
             e.printStackTrace();
@@ -42,6 +46,13 @@ public class Main {
         TypeReference mapType = new TypeReference<HashMap<String, LinesWithDate>>() {
         };
         return mapper.readValue(linesFile, mapType);
+    }
+    public static Map<String, TripsWithDate> loadTrips() throws IOException {
+        File tripsFile = new File("trips.json");
+        ObjectMapper mapper = getJsonObjectMapper();
+        TypeReference mapType = new TypeReference<HashMap<String, TripsWithDate>>() {
+        };
+        return mapper.readValue(tripsFile, mapType);
     }
 
     public static ObjectMapper getJsonObjectMapper() {

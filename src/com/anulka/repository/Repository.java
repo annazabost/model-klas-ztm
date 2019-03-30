@@ -2,6 +2,7 @@ package com.anulka.repository;
 
 import com.anulka.model.LinesWithDate;
 import com.anulka.model.StopsWithDate;
+import com.anulka.model.TripsWithDate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ public class Repository {
 
     public Map<String, StopsWithDate> stops = new HashMap<>();
     public Map<String, LinesWithDate> routes = new HashMap<>();
+    public Map<String, TripsWithDate> trips = new HashMap<>();
 
     private Repository() {
 
