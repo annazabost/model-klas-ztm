@@ -1,9 +1,6 @@
 package com.anulka;
 
-import com.anulka.model.LinesWithDate;
-import com.anulka.model.StopsInTripWithDate;
-import com.anulka.model.StopsWithDate;
-import com.anulka.model.TripsWithDate;
+import com.anulka.model.*;
 import com.anulka.repository.Repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,16 +20,19 @@ public class Main {
             Map<String, LinesWithDate> routes = loadLines();
             Map<String, TripsWithDate> trips = loadTrips();
             Map<String, StopsInTripWithDate> stopsInTrip = loadStopsInTrip();
+            StopTimes3WithDate stopTimes = loadstopTimes();
 
             System.out.println("Loaded " + stops.size() + " stops data");
             System.out.println("Loaded " + routes.size() + " lines data");
             System.out.println("Loaded " + stopsInTrip.size() + " stopsInTrip data");
+            System.out.println("Loaded " + stopTimes + " stopTimes data");
             System.out.println("Loaded " + trips.size() + " trips data");
 
             Repository.getInstance().routes =routes;
             Repository.getInstance().stops = stops;
             Repository.getInstance().trips = trips;
             Repository.getInstance().stopsInTrip = stopsInTrip;
+            Repository.getInstance().stopTimes = stopTimes;
         } catch (IOException e) {
             System.out.println("Could not read stops data: " + e.getMessage());
             e.printStackTrace();
@@ -67,6 +67,13 @@ public class Main {
         };
         return mapper.readValue(stopsInTripFile, mapType);
     }
+
+    public static StopTimes3WithDate loadstopTimes() throws IOException {
+        File stopTimesFile = new File("stopTimes3.json");
+        ObjectMapper mapper = getJsonObjectMapper();
+        return mapper.readValue(stopTimesFile, StopTimes3WithDate.class);
+    }
+
 
     public static ObjectMapper getJsonObjectMapper() {
         return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
